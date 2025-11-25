@@ -43,7 +43,7 @@ echo "Dependencies installed."
 echo ""
 echo "[5/8] Running historical backfill (2018-2024)..."
 echo "This may take 30-60 minutes depending on API rate limits..."
-python -m src.backfill.backfill_history --start-year 2018 --end-year 2024
+python -m src.backfill.backfill_history --start-year 2024 --end-year 2026
 echo "Backfill complete."
 
 # Build features
