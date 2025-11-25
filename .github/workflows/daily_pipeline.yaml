@@ -1,0 +1,103 @@
+name: Daily NBA Projection Pipeline
+
+on:
+  # Run daily at 2 AM UTC (after most NBA games have finished)
+  schedule:
+    - cron: '0 2 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  daily-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Download previous database artifact
+        uses: dawidd6/action-download-artifact@v2
+        continue-on-error: true
+        with:
+          name: nba-database
+          path: data/
+          workflow: daily_pipeline.yaml
+          workflow_conclusion: success
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: |
+          mkdir -p data
+          mkdir -p outputs/projections
+
+      - name: Pull yesterday's data
+        run: |
+          python -m src.daily.pull_day
+        continue-on-error: true
+
+      - name: Ingest daily data
+        run: |
+          python -m src.daily.ingest_day
+        continue-on-error: true
+
+      - name: Update features
+        run: |
+          python -m src.daily.update_features
+
+      - name: Update model data
+        run: |
+          python -m src.daily.update_model_data
+
+      - name: Generate projections
+        run: |
+          python -m src.daily.run_projections
+
+      - name: Upload database artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nba-database
+          path: data/
+          retention-days: 30
+
+      - name: Upload projections
+        uses: actions/upload-artifact@v3
+        with:
+          name: projections
+          path: outputs/projections/
+          retention-days: 30
+
+      - name: Summary
+        run: |
+          echo "## Daily Pipeline Complete ✅" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Database Status" >> $GITHUB_STEP_SUMMARY
+          if [ -f "data/nba_data.db" ]; then
+            db_size=$(du -h data/nba_data.db | cut -f1)
+            echo "- Database size: $db_size" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Projections" >> $GITHUB_STEP_SUMMARY
+          if [ -f "outputs/projections/projections_latest.csv" ]; then
+            proj_count=$(wc -l < outputs/projections/projections_latest.csv)
+            echo "- Players projected: $proj_count" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Artifacts uploaded and available for 30 days." >> $GITHUB_STEP_SUMMARY
