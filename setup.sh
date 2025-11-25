@@ -39,11 +39,11 @@ pip install --upgrade pip
 pip install -r requirements.txt
 echo "Dependencies installed."
 
-# Run historical backfill
+# Run historical backfill - aggregate league logs
 echo ""
-echo "[5/8] Running historical backfill (2018-2024)..."
-echo "This may take 30-60 minutes depending on API rate limits..."
-python -m src.backfill.backfill_history --start-year 2024 --end-year 2026
+echo "[5/8] Running historical backfill (2024-2026, league logs)..."
+echo "This pulls league-wide game logs and stores them as raw data."
+python -m src.backfill.backfill_league_logs --start-year 2024 --end-year 2026
 echo "Backfill complete."
 
 # Build features
