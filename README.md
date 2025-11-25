@@ -36,127 +36,34 @@ The **NBA Player Projection System** is a fully automated, production-ready **Py
 - **Advanced feature engineering**
 - **LightGBM minutes + per-minute rate models**
 - **Daily data ingestion**
-- **Automated CI/CD using GitHub Actions**
+- **Automated CI/CD via GitHub Actions**
 
-The system outputs **daily projections** for:
+The system produces **daily projections** for:
 - Minutes  
 - Points  
 - Rebounds  
 - Assists  
 
-This project models the same workflow used in professional analytics, sports tech companies, and internal machine learning teams.
-
 ---
 
 # Why This Project Matters
 
-This project demonstrates end-to-end ownership across:
+This project demonstrates real-world end-to-end ownership in:
 
-- **Data Engineering**  
-- **Machine Learning**  
-- **MLOps / CI/CD**  
-- **Pipeline orchestration**  
-- **Product-level design**  
+- Data Engineering  
+- Machine Learning  
+- MLOps / CI/CD  
+- Modeling strategy  
+- Pipeline orchestration  
 
-It serves as a **portfolio-grade example** of how real analytics and data engineering pipelines are structured in industry.
+It is designed as a **portfolio-grade example** of modern analytics engineering.
 
-Recruiters and hiring managers can see:
-- A complete ML lifecycle  
+This project shows:
+- System design thinking  
+- Robust pipeline architecture  
+- Modeling fundamentals  
+- Code modularity  
 - Automated production workflows  
-- Practical problem-solving with real APIs  
-- Scalable, modular code design  
-
----
-
-# Architecture
-
-```mermaid
-flowchart TD
-    A[Historical Backfill<br>player_game_logs] --> B[Feature Engineering]
-    C[Daily NBA API Ingestion] --> B
-    B --> D[Model Dataset Builder]
-
-    D --> M1[Minutes Model<br>LightGBM]
-    D --> M2[Rate Models<br>PPM / RPM / APM]
-
-    M1 --> P[Final Projections]
-    M2 --> P
-
-    P --> O[Outputs/Projections CSVs]
-ChatGPT said:
-
-Here is the complete, fully optimized new README, delivered as a single clean copy-paste text block with all SEO, TOC, architecture diagram (Mermaid), keywords, and recruiter-focused framing included.
-
-You can paste this directly over your current README.
-
-<!-- SEO -->
-<meta name="description" content="NBA Player Projection System using Python, SQL, LightGBM, and automated CI/CD pipelines. Predicts NBA player minutes, points, rebounds, and assists using machine learning, feature engineering, and daily data ingestion. Built by Edwin (Ed) Bleiler." />
-<link rel="canonical" href="https://github.com/edwinbleiler/edwinbleiler-nba-projection-system" />
-
-# NBA Player Projection System  
-**End-to-end NBA Machine Learning Pipeline for Daily Player Projections**  
-Built by **[Edwin (Ed) Bleiler](https://edwinbleiler.com)**  
-📎 [LinkedIn](https://www.linkedin.com/in/edwin-ed-bleiler) •  
-📎 [GitHub](https://github.com/edwinbleiler)
-
----
-
-# Table of Contents
-- [Overview](#overview)
-- [Why This Project Matters](#why-this-project-matters)
-- [Architecture](#architecture)
-- [Key Features](#key-features)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Daily Pipeline Usage](#daily-pipeline-usage)
-- [Models](#models)
-- [Feature Engineering](#feature-engineering)
-- [Performance](#performance)
-- [Future Enhancements](#future-enhancements)
-- [Skills Demonstrated](#skills-demonstrated)
-- [About the Author](#about-the-author)
-- [SEO Keywords](#seo-keywords)
-
----
-
-# Overview
-
-The **NBA Player Projection System** is a fully automated, production-ready **Python + SQL Machine Learning pipeline** that predicts NBA player performance using:
-
-- **Historical NBA game logs**
-- **Advanced feature engineering**
-- **LightGBM minutes + per-minute rate models**
-- **Daily data ingestion**
-- **Automated CI/CD using GitHub Actions**
-
-The system outputs **daily projections** for:
-- Minutes  
-- Points  
-- Rebounds  
-- Assists  
-
-This project models the same workflow used in professional analytics, sports tech companies, and internal machine learning teams.
-
----
-
-# Why This Project Matters
-
-This project demonstrates end-to-end ownership across:
-
-- **Data Engineering**  
-- **Machine Learning**  
-- **MLOps / CI/CD**  
-- **Pipeline orchestration**  
-- **Product-level design**  
-
-It serves as a **portfolio-grade example** of how real analytics and data engineering pipelines are structured in industry.
-
-Recruiters and hiring managers can see:
-- A complete ML lifecycle  
-- Automated production workflows  
-- Practical problem-solving with real APIs  
-- Scalable, modular code design  
 
 ---
 
@@ -176,39 +83,23 @@ flowchart TD
 
     P --> O[Outputs/Projections CSVs]
 
-Key Features
+# Key Features
 
-Active Players Only: Backfill focuses on modern NBA data
+Active Players Only (no historical noise)
 
-Recent Seasons Window: Dynamically fetches last 1–2 seasons
+Recent Seasons Only (dynamic defaults)
 
-Automated Daily Ingestion: Incremental updates with deduplication
+Automated Daily Ingestion
 
-Robust Feature Engineering:
+Rolling & Rate-Based Feature Engineering
 
-Rolling averages (3/5/10/20 game)
+LightGBM Machine Learning Models
 
-Per-minute rates
-
-rest/travel indicators
-
-home/away context
-
-Machine Learning Models:
-
-LightGBM Minutes Model
-
-LightGBM Per-Minute Rate Models
-
-CI/CD GitHub Actions:
-
-Full daily run at 2 AM UTC
-
-Artifact upload: DB + projections
+GitHub Actions CI/CD
 
 Portable SQLite Storage
 
-Technology Stack
+# Technology Stack
 
 Python 3.8+
 
@@ -222,78 +113,38 @@ nba_api
 
 SQLite
 
-GitHub Actions (CI/CD)
+GitHub Actions
 
-Shell Automation
-
-Project Structure
+# Project Structure
 edwinbleiler-nba-projection-system/
-├── data/                          # SQLite database and models
+├── data/
 ├── outputs/
-│   └── projections/               # Generated projection CSVs
+│   └── projections/
 ├── src/
-│   ├── utils/                     # Utility modules
-│   │   ├── paths.py               # Path resolution helpers
-│   │   ├── logging.py             # Logging utilities
-│   │   ├── db.py                  # Database operations
-│   │   └── fetch_utils.py         # API fetch + retry logic
+│   ├── utils/
 │   ├── backfill/
-│   │   └── backfill_history.py    # Recent-season historical backfill
-│   ├── daily/                     # Daily pipeline scripts
-│   │   ├── pull_day.py
-│   │   ├── ingest_day.py
-│   │   ├── update_features.py
-│   │   ├── update_model_data.py
-│   │   └── run_projections.py
+│   ├── daily/
 │   ├── features/
-│   │   └── feature_engineering.py # Full feature builder
 │   └── model/
-│       ├── utils.py
-│       ├── train_minutes_model.py
-│       ├── train_rate_models.py
-│       ├── predict_minutes.py
-│       └── predict_rates.py
-├── .github/workflows/daily_pipeline.yaml
+├── .github/workflows/
 ├── requirements.txt
 ├── setup.sh
 ├── CLAUDE.md
-├── LICENSE
 └── README.md
 
-Getting Started
+# Getting Started
 Prerequisites
 
 Python 3.8+
 
 Git
 
-approx. 1GB storage (for recent games)
-
 Installation
 git clone https://github.com/edwinbleiler/edwinbleiler-nba-projection-system
 cd edwinbleiler-nba-projection-system
 bash setup.sh
 
-
-setup.sh performs:
-
-Virtual environment creation
-
-Dependency install
-
-Active/modern-season backfill
-
-Feature building
-
-Model dataset creation
-
-Minutes model training
-
-Rate model training
-
-Initial projection generation
-
-Daily Pipeline Usage
+# Daily Pipeline Usage
 source venv/bin/activate
 python -m src.daily.pull_day
 python -m src.daily.ingest_day
@@ -302,135 +153,129 @@ python -m src.daily.update_model_data
 python -m src.daily.run_projections
 
 
-Outputs go to:
+Outputs will appear in:
 
 outputs/projections/
 
-Models
-Minutes Model (LightGBM)
+# Models
+Minutes Model
 
-Predicts expected playing time using:
+Predicts expected playing time based on:
 
-rolling averages
+Rolling averages
 
-historical trends
+Game context
 
-rest/travel flags
+Rest/travel
 
-game context
+Rate Models
 
-Per-Minute Rate Models (LightGBM)
+For each stat, predicts:
 
-Predict:
+Points per minute
 
-Points per minute (PPM)
+Rebounds per minute
 
-Rebounds per minute (RPM)
+Assists per minute
 
-Assists per minute (APM)
+Final Projections = Minutes × Rates
 
-Final projections = minutes × per-minute rates.
-
-Feature Engineering
+# Feature Engineering
 
 Includes:
 
-Rolling windows (3, 5, 10, 20 games)
+Rolling windows
 
-Per-minute conversions
+Per-minute rates
 
-Days rest / travel
+Home/away indicators
+
+Rest/travel metrics
 
 Usage proxies
 
-Game context features (home/away, season buckets)
+# Performance
 
-Performance
-
-Range varies by player role and variance, but typical:
+Typical ranges on modern NBA data:
 
 Minutes MAE: 4–6 minutes
 
-Points/min MAE: 0.02–0.05
+Points rate MAE: 0.02–0.05
 
-Rebounds/min MAE: 0.01–0.02
+Rebounds rate MAE: 0.01–0.02
 
-Assists/min MAE: 0.01–0.02
+Assists rate MAE: 0.01–0.02
 
-Future Enhancements
+# Future Enhancements
 
 Opponent-adjusted projections
 
-Injury integration
+Injury model integration
 
-Pace factor modeling
+Pace & defensive efficiency factors
 
-Dashboard frontend (Streamlit)
+Dashboard visualization (Streamlit)
 
 REST API endpoint
 
-MLflow tracking
+MLflow experiment tracking
 
-Model ensembling
-
-Skills Demonstrated
+# Skills Demonstrated
 Data Engineering
 
-Pipeline orchestration
+Pipeline design
 
-Retry logic & rate limiting
+Retry logic
 
-SQLite schema design
+Incremental ingestion
 
-Incremental ingestion & deduplication
+SQLite schema work
 
 Structured logging
 
 Machine Learning
 
-LightGBM modeling
+LightGBM
 
 Feature engineering
 
-Data preparation
+Evaluation and validation
 
-Error analysis
+Model lifecycle management
 
-Model retraining lifecycle
+MLOps
 
-MLOps / CI/CD
-
-GitHub Actions automation
-
-Artifact management
+GitHub Actions
 
 Daily scheduled runs
+
+Artifact management
 
 Reproducible environments
 
 Software Engineering
 
-Modular codebase
+Modular architecture
 
-Packaging patterns
+Reusable utility modules
 
-Shell scripting & automation
+Shell scripting
 
-Version control discipline
+Version control workflows
 
-About the Author
+# About the Author
 
 Edwin (Ed) Bleiler
-Strategy & Ops • Product • Data Engineering • Machine Learning • Chief of Staff
+Strategy & Ops • Product • Data Engineering • Machine Learning
 Boston, MA
 
-Website: https://edwinbleiler.com
+https://edwinbleiler.com
 
-LinkedIn: https://www.linkedin.com/in/edwin-ed-bleiler
+https://www.linkedin.com/in/edwin-ed-bleiler
 
-GitHub: https://github.com/edwinbleiler
+https://github.com/edwinbleiler
 
-SEO Keywords
+# SEO Keywords
 NBA Player Projection System
 NBA Machine Learning Pipeline
 NBA Minutes Prediction
@@ -438,7 +283,6 @@ Python SQL Machine Learning
 LightGBM NBA Model
 Sports Analytics Python
 NBA Player Stats Forecasting
-Automated NBA Data Pipeline
 Daily NBA Projections
 Basketball Data Engineering
 Edwin Bleiler
