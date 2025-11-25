@@ -1,4 +1,9 @@
 # NBA Player Projection System
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![LightGBM](https://img.shields.io/badge/Model-LightGBM-green)
+![CI/CD](https://img.shields.io/badge/GitHub-Actions-black)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
+
 
 **An end-to-end NBA Machine Learning Pipeline for player performance prediction**
 
@@ -24,6 +29,34 @@ The system produces **daily projections** for:
 
 ---
 
+### What This System Predicts
+
+This pipeline generates **daily per-player projections** for:
+
+- **Minutes**
+- **Points**
+- **Rebounds**
+- **Assists**
+
+These are fully model-driven and updated automatically every morning via CI/CD.
+
+---
+
+## Example Projections
+
+Sample daily output (abbreviated):
+
+| Player | Team | Pred Minutes | Pred PTS | Pred REB | Pred AST |
+|--------|------|--------------|----------|----------|----------|
+| Jayson Tatum | BOS | 36.2 | 28.4 | 8.1 | 4.3 |
+| Shai Gilgeous-Alexander | OKC | 35.7 | 29.1 | 5.3 | 6.5 |
+| Luka Dončić | DAL | 37.0 | 31.2 | 9.5 | 8.7 |
+
+Full projections are stored in:  
+`outputs/projections/projections_latest.csv`
+
+---
+
 ## Why This Project Matters
 
 This project is designed to look and behave like a real-world analytics & machine learning system:
@@ -41,6 +74,30 @@ For recruiters and hiring managers, this repo demonstrates:
 - Software engineering discipline (modular structure, utilities, logging)
 
 ---
+
+## Data Sources
+
+This system uses:
+
+- **nba_api** — official NBA statistics API wrapper  
+- **Player game logs** from the past X seasons  
+- **Daily game updates** fetched automatically at runtime  
+
+All data is stored in a portable SQLite database under `data/`.
+
+---
+
+## Design Principles
+
+This project follows modern analytics engineering standards:
+
+- **Reproducibility** — deterministic runs, version-controlled dependencies  
+- **Modularity** — ingestion, features, and models separated by responsibility  
+- **Fault Tolerance** — robust retry logic for unreliable APIs  
+- **Incremental Data Updates** — efficient daily pipeline instead of full reloads  
+
+---
+
 
 ## Architecture
 
