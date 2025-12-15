@@ -5,7 +5,8 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 
 
-**An end-to-end NBA Machine Learning Pipeline for player performance prediction**
+This is a personal learning project created to explore AI, data pipelines and system design.
+
 
 Built by [Edwin (Ed) Bleiler](https://edwinbleiler.com) | [LinkedIn](https://www.linkedin.com/in/edwin-ed-bleiler) | [GitHub](https://github.com/edwinbleiler)
 
