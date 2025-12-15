@@ -4,8 +4,7 @@
 ![CI/CD](https://img.shields.io/badge/GitHub-Actions-black)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 
-
-This is a personal learning project created to explore AI, data pipelines and system design.
+NOTE: This repository contains a personal learning project created to explore data pipelines, modeling workflows, and system design. It is not intended to represent my primary professional focus or a production system.
 
 
 Built by [Edwin (Ed) Bleiler](https://edwinbleiler.com) | [LinkedIn](https://www.linkedin.com/in/edwin-ed-bleiler) | [GitHub](https://github.com/edwinbleiler)
@@ -14,7 +13,7 @@ Built by [Edwin (Ed) Bleiler](https://edwinbleiler.com) | [LinkedIn](https://www
 
 ## Overview
 
-The **NBA Player Projection System** is a fully automated, production-ready **Python + SQL Machine Learning pipeline** that predicts NBA player performance using:
+The **NBA Player Projection System** is a fully automated Python + SQL analytics and modeling pipeline that predicts NBA player performance using:
 
 - **Historical NBA game logs**
 - **Advanced feature engineering**
@@ -55,24 +54,6 @@ Sample daily output (abbreviated):
 
 Full projections are stored in:  
 `outputs/projections/projections_latest.csv`
-
----
-
-## Why This Project Matters
-
-This project is designed to look and behave like a real-world analytics & machine learning system:
-
-- It ingests real NBA data using production-style patterns
-- It builds a structured feature store and model dataset
-- It trains, saves, and reuses multiple models (minutes + per-minute rates)
-- It automates daily runs via GitHub Actions and artifacts
-
-For recruiters and hiring managers, this repo demonstrates:
-
-- Data engineering skills (pipelines, schemas, incremental updates)
-- Machine learning skills (feature engineering, LightGBM modeling, evaluation)
-- MLOps skills (CI/CD, reproducibility, automated jobs)
-- Software engineering discipline (modular structure, utilities, logging)
 
 ---
 
@@ -257,7 +238,7 @@ Typical ranges on modern NBA data:
 
 ---
 
-## Skills Demonstrated
+## Technical Areas Explored
 
 **Data Engineering**
 - Designing incremental ingestion pipelines
@@ -287,26 +268,10 @@ Typical ranges on modern NBA data:
 ## About the Author
 
 **Edwin (Ed) Bleiler**
-Strategy & Ops • Product • Data Engineering • Machine Learning
+Strategy & Operations • Product Ownership • Analytics & Systems
 Boston, MA
 
 - Website: https://edwinbleiler.com
 - LinkedIn: https://www.linkedin.com/in/edwin-ed-bleiler
 - GitHub: https://github.com/edwinbleiler
 
----
-
-## SEO Keywords
-
-NBA Player Projection System
-NBA Machine Learning Pipeline
-NBA Minutes Prediction
-Python SQL Machine Learning
-Sports Analytics Python
-NBA Player Stats Forecasting
-Automated NBA Data Pipeline
-Daily NBA Projections
-LightGBM NBA Model
-Basketball Data Engineering
-Edwin Bleiler
-Ed Bleiler
